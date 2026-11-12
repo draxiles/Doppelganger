@@ -1,0 +1,45 @@
+# Local Unity state and generated outputs
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/Diagnostics/
+/MemoryCaptures/
+/Recordings/
+
+# Local import workspace and archived installers
+/ThirdPartyStaging/
+/Assets/**/*.unitypackage
+/Assets/**/*.unitypackage.meta
+
+# Asset Store dependencies imported locally
+/Assets/Creepy_Cat/
+/Assets/Creepy_Cat.meta
+/Assets/Easy FPS/
+/Assets/Easy FPS.meta
+/Assets/Sci-Fi Styled Modular Pack/
+/Assets/Sci-Fi Styled Modular Pack.meta
+/Assets/UnityTechnologies/
+/Assets/UnityTechnologies.meta
+
+# Generated prefabs, materials and clips containing ADAM Character Pack content
+/Assets/DoppelgangerGenerated/Characters/Adam/
+/Assets/DoppelgangerGenerated/Characters/Adam.meta
+/Assets/DoppelgangerGenerated/Characters/AdamRobot.prefab
+/Assets/DoppelgangerGenerated/Characters/AdamRobot.prefab.meta
+/Assets/DoppelgangerGenerated/Characters/Animations/Adam_CombatIdle.anim*
+/Assets/DoppelgangerGenerated/Characters/Animations/Adam_Walk_InPlace.anim*
+/Assets/DoppelgangerGenerated/Prologue/Materials/Boarder *.mat*
+/Assets/Resources/Doppelganger/ImpactPrologue.prefab
+/Assets/Resources/Doppelganger/ImpactPrologue.prefab.meta
+
+# Generated IDE files
+/.vs/
+/.idea/
+/*.sln
+/*.slnx
+/*.csproj
+/*.userprefs

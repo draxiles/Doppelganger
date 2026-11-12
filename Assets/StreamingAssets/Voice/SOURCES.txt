@@ -1,0 +1,7 @@
+Vosk API 0.3.45: https://github.com/alphacep/vosk-api/releases/tag/v0.3.45
+Native Windows x64 distribution: https://github.com/alphacep/vosk-api/releases/download/v0.3.45/vosk-win64-0.3.45.zip
+Russian model: https://alphacephei.com/vosk/models/vosk-model-small-ru-0.22.zip
+Model list and license: https://alphacephei.com/vosk/models
+Vosk and Russian model: Apache License 2.0. Bundled GCC runtime: GPLv3 with GCC Runtime Library Exception 3.1.
+Native archive SHA256 F1DCC9CCA460630F81EA8F71794F69C80BED6556D2A4E6237B5785E1D2DFF34B
+Model archive SHA256 961D5FF98A17F4AA6DE69864D0AA71FA5BAC682301D2B5D17A3F24C5C99A46D4

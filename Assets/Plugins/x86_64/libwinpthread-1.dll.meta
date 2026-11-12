@@ -1,0 +1,35 @@
+fileFormatVersion: 2
+guid: 7e9b594051dc46729c2b9cef48d34737
+PluginImporter:
+  externalObjects: {}
+  serializedVersion: 3
+  iconMap: {}
+  executionOrder: {}
+  defineConstraints: []
+  isPreloaded: 0
+  isOverridable: 0
+  isExplicitlyReferenced: 0
+  validateReferences: 1
+  platformData:
+  - first:
+      Any: 
+    second:
+      enabled: 0
+      settings: {}
+  - first:
+      Editor: Editor
+    second:
+      enabled: 1
+      settings:
+        CPU: x86_64
+        OS: Windows
+        DefaultValueInitialized: true
+  - first:
+      Standalone: Win64
+    second:
+      enabled: 1
+      settings:
+        CPU: x86_64
+  userData: Vosk 0.3.45 official Windows x64 distribution
+  assetBundleName: 
+  assetBundleVariant: 

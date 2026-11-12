@@ -1,0 +1,18 @@
+{
+  "runtime": "MediaPipe 0.10.32 / Python 3.12.14 / PyInstaller 6.16.0 / Windows x64 CPU",
+  "library_source": "https://github.com/google-ai-edge/mediapipe",
+  "library_wheel": "https://pypi.org/project/mediapipe/0.10.32/",
+  "model": "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+  "model_sha256": "fbc2a30080c3c557093b5ddfc334698132eb341044ccee322ccf8bcf3607cde1",
+  "bundle_sha256": "1f90cd08eb778c0a44f8ad1da4eb90b74d3aa3d739f16c54e7cfc304d916abe1",
+  "model_docs": "https://ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker",
+  "face_model": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+  "face_model_sha256": "64184e229b263107bc2b804c6625db1341ff2bb731874b0bcc2fe6544e0bc9ff",
+  "face_model_docs": "https://developers.google.com/edge/mediapipe/solutions/vision/face_landmarker",
+  "photo_fixture_docs": "https://github.com/google-ai-edge/mediapipe-samples/blob/main/examples/gesture_recognizer/python/gesture_recognizer.ipynb",
+  "test_photos": "Official example Pixabay photos kept in authoring staging only; not bundled in game.",
+  "offline": true,
+  "opens_devices": false,
+  "network_requests": false,
+  "changes": "Official models unchanged. Bounded RGB/JSON bridge and C# angle/distance gesture classification. In --head mode every image estimates face orientation and alternating images also infer hand landmarks."
+}
