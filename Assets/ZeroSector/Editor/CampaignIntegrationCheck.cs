@@ -491,6 +491,39 @@ namespace ZeroSector.Editor
             ScreenCapture.CaptureScreenshot("Diagnostics/CampaignPreviews/"+name+"-gameplay.png");
         }
 
+        static void CheckSubtitlePreferences()
+        {
+            const string largeKey="Doppelganger.Subtitles.Large";
+            const string contrastKey="Doppelganger.Subtitles.HighContrast";
+            bool hadLarge=PlayerPrefs.HasKey(largeKey),hadContrast=PlayerPrefs.HasKey(contrastKey);
+            int originalLarge=PlayerPrefs.GetInt(largeKey),originalContrast=PlayerPrefs.GetInt(contrastKey);
+            var recreated=new GameObject("Subtitle preference check");
+            try
+            {
+                PlayerPrefs.DeleteKey(largeKey);
+                PlayerPrefs.DeleteKey(contrastKey);
+                var hud=recreated.AddComponent<CampaignHud>();
+                hud.Initialize(game);
+                Check(!hud.LargeSubtitles && !hud.HighContrastSubtitles,
+                    "the default radio subtitle size and contrast are used for a new profile");
+                hud.LargeSubtitles=true;
+                hud.HighContrastSubtitles=true;
+                game.hud.Initialize(game);
+                Check(game.hud.LargeSubtitles && game.hud.HighContrastSubtitles,
+                    "radio subtitle size and contrast survive recreating the HUD");
+            }
+            finally
+            {
+                if(hadLarge) PlayerPrefs.SetInt(largeKey,originalLarge);
+                else PlayerPrefs.DeleteKey(largeKey);
+                if(hadContrast) PlayerPrefs.SetInt(contrastKey,originalContrast);
+                else PlayerPrefs.DeleteKey(contrastKey);
+                PlayerPrefs.Save();
+                game.hud.Initialize(game);
+                UnityEngine.Object.Destroy(recreated);
+            }
+        }
+
         static void CheckBulletMarkOnCargoWall()
         {
             game.presentation.ResetView();
@@ -631,6 +664,7 @@ namespace ZeroSector.Editor
                         Check(game.Radio.Speaker=="ГЕРА" && game.Radio.Line.StartsWith("Командир Алекс,",StringComparison.Ordinal) &&
                             openingHera && game.Radio.GetComponents<AudioSource>().Any(source=>source.isPlaying && source.clip==openingHera),
                             "the opening radio plays the packaged Hera recording and addresses Commander Alex in the subtitles");
+                        CheckSubtitlePreferences();
                         Begin(35); break;
                     case 35:
                         if(!game.BriefingOpen) break;

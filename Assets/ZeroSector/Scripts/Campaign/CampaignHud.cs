@@ -11,12 +11,14 @@ namespace ZeroSector.Campaign
         Texture2D keyArt,menuShade;
         bool help,ownsFont;
         int controlPage;
+        static readonly string[] ControlTabs={"Клавиатура","Голос","Жесты","Интерфейс"};
         readonly Color cyan=new(.34f,.81f,.94f),ink=new(.92f,.95f,.96f),panel=new(.012f,.021f,.033f,.90f),amber=new(1,.67f,.34f);
 
         public void Initialize(CampaignGame owner)
         {
             game=owner;
             keyArt=Resources.Load<Texture2D>("Doppelganger/Interface/SignalKeyArt");
+            LoadSubtitlePreferences();
         }
 
         void Styles()
@@ -86,11 +88,13 @@ namespace ZeroSector.Campaign
                     if(game.Dead || game.Victory) Result();
                     else if(game.Paused) Pause();
                 }
-                if(!game.MainMenu && !game.Paused && !game.Dead && !game.Victory) DrawRadio();
+                float noticeY=701;
+                if(!game.MainMenu && !game.Paused && !game.Dead && !game.Victory)
+                    noticeY=Mathf.Min(noticeY,DrawRadio()-64);
                 if(!help || (!game.MainMenu && !game.Paused)) DeviceOverlay();
                 if(!string.IsNullOrEmpty(game.Notice))
                 {
-                    Box(new Rect(410,701,780,58)); Text(428,710,742,45,game.Notice,small);
+                    Box(new Rect(410,noticeY,780,58)); Text(428,noticeY+9,742,45,game.Notice,small);
                 }
                 if(game.ScreenFade>0) Fill(new Rect(0,0,1600,900),new Color(0,0,0,game.ScreenFade));
             }
@@ -234,25 +238,6 @@ namespace ZeroSector.Campaign
             else if(boss.Phase==CampaignEnemy.BossPhase.Recovery && game.CoreExposed)
                 Text(749,101,325,28,"УРОН В КОНТРАТАКЕ +18%",small);
         }
-        void DrawRadio()
-        {
-            var radio=game.Radio;
-            if(!radio || string.IsNullOrEmpty(radio.Line)) return;
-            var accent=radio.Speaker=="ЗЕМЛЯ" ? new Color(.48f,1,.71f) :
-                radio.Speaker=="ADAM" ? new Color(1,.37f,.45f) : cyan;
-            Fill(new Rect(375,765,825,105),new Color(.007f,.021f,.033f,.95f));
-            Fill(new Rect(375,765,3,105),accent);
-            for(int i=0;i<9;i++)
-            {
-                float h=4+12*Mathf.Abs(Mathf.Sin(Time.unscaledTime*9+i*1.17f));
-                Fill(new Rect(393+i*5,792-h*.5f,2,h),accent);
-            }
-            string channel=radio.Speaker=="ГЕРА" ? "ВНУТРЕННЯЯ СЕТЬ" : radio.Speaker=="ЗЕМЛЯ" ? "ВНЕШНИЙ КАНАЛ" : "СВЯЗЬ";
-            Text(449,774,510,30,radio.Speaker+"   /   "+channel,small);
-            Text(1033,774,145,30,"Tab — дальше",small);
-            Text(393,807,785,59,radio.Line,body);
-            Fill(new Rect(393,863,782*radio.Progress,2),accent);
-        }
         void Diagnostics()
         {
             Box(new Rect(1110,25,460,365));
@@ -310,9 +295,9 @@ namespace ZeroSector.Campaign
             float sensitivity=GUI.HorizontalSlider(new Rect(x+252,825,w-252,24),devices.HeadSensitivity,.7f,1.4f);
             if(Mathf.Abs(sensitivity-devices.HeadSensitivity)>.005f) devices.HeadSensitivity=sensitivity;
             float right=585,rw=925;
-            string[] tabs={"Клавиатура","Голос","Жесты"};
-            for(int tab=0;tab<3;tab++)
-                if(GUI.Button(new Rect(right+tab*(rw/3),110,rw/3-8,45),(controlPage==tab ? "● " : "")+tabs[tab],button)) controlPage=tab;
+            float tabWidth=rw/ControlTabs.Length;
+            for(int tab=0;tab<ControlTabs.Length;tab++)
+                if(GUI.Button(new Rect(right+tab*tabWidth,110,tabWidth-8,45),(controlPage==tab ? "● " : "")+ControlTabs[tab],button)) controlPage=tab;
             if(controlPage==0)
             {
                 Text(right,180,rw,410,"WASD — ходьба; мышь — обзор\nShift — бег; C / Ctrl — присесть; пробел — прыжок\nЛКМ — огонь; ПКМ — прицеливание\nR — перезарядка; F — осмотр оружия\nQ / колесо — смена оружия; X — пистолет\n1 — достать оружие; 2 — раскрыть энергощит; 3 — ускорение\nE — взаимодействие с предметом / терминалом\nEsc — пауза; F1 — брифинг; H — телеметрия боя\nF7 — микрофон; F8 — камера; F9 — калибровка головы\nF5 — контрольная точка; F6 — отчёт о бое");
@@ -331,7 +316,7 @@ namespace ZeroSector.Campaign
                 }
                 Text(right,839,rw,34,"На мостике «Гера, проверь связь» вызывает ответ бортового компьютера.",small);
             }
-            else
+            else if(controlPage==2)
             {
                 Text(right,173,rw,46,"Рука целиком в кадре. Удержи жест ≈ 0,6 с. Для повтора убери руку.",small);
                 string[,] rows={
@@ -360,6 +345,7 @@ namespace ZeroSector.Campaign
                 }
                 Text(right,787,rw,58,"* Большой + указательный + средний — шаг. F9 выставляет центр взгляда, пока ты смотришь прямо.",small);
             }
+            else SubtitleControls(right,rw);
         }
         void LevelBar(Rect rect,float level)
         {
